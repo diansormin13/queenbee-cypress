@@ -6,7 +6,10 @@ describe('open Homepage QueenBe', () => {
     noHP: '85171140238',
     pass: '@QWEqwe123',
     profile: 'test',
-    product: 'Collagen drink'
+    product: 'Collagen drink',
+    delivery:'Regular',
+    bank: 'BCA Virtual Account',
+    kurir: 'jne'
   }
 
   beforeEach(() => {
@@ -22,8 +25,19 @@ describe('open Homepage QueenBe', () => {
     cartProduct.serachProduct(credential.product)
   })
 
-  it('As a Customer(+), I want to add product to cart', () => {
+  it('As a Customer(+), I want to add product to cart and process payment until sent payment', () => {
     cartProduct.addToCartNutrition()
+    cartProduct.processPaymentProduct(credential.delivery,credential.kurir,credential.bank)
+    cartProduct.validateBerhasilOrder()
   })
 
+  it('As a Customer(-), I want to batalkan pesanan after choose type ef pembayaran', () => {
+    cartProduct.addToCartNutrition()
+    cartProduct.processPaymentProduct(credential.delivery,credential.kurir,credential.bank)
+    cartProduct.cancelOrder()
+  })
+
+  it('As a Customer(-), unable to click beli sekarang if there is no product at cart', () => {
+    cartProduct.clickButtonKeranjang()
+  })
 })
